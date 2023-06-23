@@ -1,0 +1,106 @@
+.loginContent{
+    // background-color: black;
+    display: flex;
+    width: 100%; 
+    margin: 0px; 
+
+    .loginBackground{
+        width: 100%; 
+        height: 100vh; 
+        background-color: #ddd;
+        position: fixed; 
+        z-index: -1;
+    }
+
+    .loginModal{
+        width: 500px; 
+        // height: 500px; 
+        background: white; 
+        margin: 100px auto; 
+
+        display: flex; 
+        flex-direction: column;
+        align-items: center;
+
+        h1{
+            margin: 50px 0px; 
+        }
+
+        input[type='text'], input[type='password'], input[type='phone'], input[type='email']{
+            padding: 16px 16px; 
+            width: 80%; 
+            border-radius: 5px;
+            border: 1px solid #ddd; 
+            font-size: 20px; 
+            box-sizing: border-box;
+        }
+
+        input:not(:last-child){
+            margin-bottom: 18px;
+        }
+
+        button{
+            width: 80%; 
+            border-radius: 50px; 
+            background-color: black;
+            color: white; 
+            border: none; 
+            padding: 20px; 
+            box-sizing: border-box;
+            cursor: pointer; 
+        }
+
+        .alternate, button{
+            transition: 0.2;
+            cursor: pointer; 
+        }
+
+        .alternate{
+            margin-bottom: 50px;
+        }
+
+        p:hover, button:hover{
+            opacity: 0.8;
+        }
+
+        .error{
+            margin-top: 0px; 
+            color: red; 
+        }
+
+    }
+}
+
+@media only screen and (max-width: 550px){
+    .loginContent{
+        .loginModal{
+            width: 90%; 
+        }
+    }
+}
+
+@media only screen and (max-width: 400px){
+    .loginContent{
+        h1{
+            font-size: 25px;
+        }
+        
+        .loginModal{
+            width: 90%; 
+            // background: blue;
+
+            input[type='text'], input[type='password'], input[type='phone'], input[type='email']{
+                padding: 14px; 
+                font-size: 16px;
+            }
+
+            button{
+                padding: 14px; 
+            }
+
+            .alternate, .error{
+                font-size: 14px;
+            }
+        }
+    }
+}

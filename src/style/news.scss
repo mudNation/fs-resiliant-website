@@ -1,0 +1,106 @@
+
+
+.singleNewsContent{
+    width: 1200px; 
+    margin: 0px auto 50px auto; 
+
+    h1{
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    h2{
+        text-align: center;
+        font-style: italic;
+        margin: 0px; 
+    }
+
+    p{
+        margin-top: 50px; 
+    }
+
+    .story_content{
+        margin-bottom: 50px;
+        text-align: justify;
+    }
+
+    .rating{
+        display: flex; 
+
+        div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chevRating{
+            border: 1px solid black; 
+            border-radius: 5px;
+            cursor: pointer; 
+            width: 80px; 
+            height: 30px; 
+            box-sizing: border-box;
+        }
+
+        .chevRatingClicked{
+            border: none; 
+            background: black; 
+            color: white; 
+        }
+
+        div:not(:last-child){
+            margin-right: 20px;
+        }
+
+        p{
+            margin: 0px; 
+        }
+    }
+
+    .authorDet{
+        margin: 0px 0px 10px 0px; 
+        font-weight: bold;
+    }
+
+    .firstAuthor{
+        margin-top: 20px;  
+    }
+}
+
+
+@media only screen and (max-width: 1250px){
+    .singleNewsContent{
+        width: 1000px; 
+    }   
+}
+
+@media only screen and (max-width: 1050px){
+    .singleNewsContent{
+        width: 800px; 
+    }   
+}
+
+@media only screen and (max-width: 850px){
+    .singleNewsContent{
+        width: 90%; 
+    }   
+}
+
+@media only screen and (max-width: 350px){
+    .singleNewsContent{
+        .rating{
+            .chevRating{
+                font-size: 12px;
+                width: 60px; 
+            }
+
+            div:not(:last-child){
+                margin-right: 10px;
+            }
+        }
+
+        .authorDet{
+            font-size: 12px; 
+        }
+    }   
+}

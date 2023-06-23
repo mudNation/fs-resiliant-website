@@ -1,0 +1,96 @@
+.addNewsContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // background-color: blue;
+    margin: auto;
+
+    .addNewsModal{
+        background-color: rgb(240, 240, 240); 
+        width: 800px; 
+        // height: 800px; 
+        margin: 50px auto; 
+        display: flex; 
+        flex-direction: column;
+    
+        h1{
+            text-align: center;
+            font-size: 25px; 
+            margin-top: 30px;
+        }
+    
+        .formContainer{
+            width: 80%; 
+            margin: auto; 
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+    
+            input[type="text"], textarea{
+                padding: 16px; 
+                box-sizing: border-box;
+                border-radius: 5px;
+                border: none; 
+            }
+    
+            textarea{
+                resize: none; 
+                // height: 100px; 
+            }
+    
+            label{
+                margin-bottom: 5px;
+            }
+        }
+    
+        button{
+            background: black; 
+            color: white; 
+            padding: 16px; 
+            width: fit-content;
+            border-radius: 5px; 
+            align-self: center;
+            cursor: pointer; 
+            transition: 0.2;
+            margin-bottom: 30px; 
+            width: 120px; 
+        }
+    
+        button:hover{
+            opacity: 0.8; 
+        }
+
+        .error{
+            color: red;
+            text-align: center;
+        }
+    }
+}
+
+
+
+@media only screen and (max-width: 850px){
+    .addNewsContent{
+        width: 90%; 
+
+        .addNewsModal{
+            width: 100%; 
+
+            h1{
+                font-size: 20px; 
+            }
+        }
+    }   
+}
+
+@media only screen and (max-width: 850px){
+    .addNewsContent{
+        .addNewsModal{
+            h1{
+                font-size: 16px; 
+                width: 80%; 
+                margin: 30px auto 30px auto;
+            }
+        }
+    }   
+}
