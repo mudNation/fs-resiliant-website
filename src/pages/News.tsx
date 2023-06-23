@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import { useEffect, useState } from "react";
 import { NewsType, RatingUpdate, Rating } from "../types";
@@ -12,12 +12,17 @@ import { doc, setDoc, runTransaction, addDoc, collection, query, where, getDocs 
 
 const News = () => {
     const { id } = useParams();  
+    const navigate = useNavigate(); 
 
     const [newsInfo, setNewsInfo] = useState<NewsType>(); 
     const [voted, setVoted] = useState(''); 
 
 
     useEffect(() => {
+        if(localStorage.getItem("user") === undefined){
+            navigate('/'); 
+        }
+
         const newsData: NewsType[] = JSON.parse(localStorage.getItem('news') || '[]'); 
         const tempNewsInfo: NewsType | undefined = newsData.find((news) => news.id === id); 
         setNewsInfo(tempNewsInfo)

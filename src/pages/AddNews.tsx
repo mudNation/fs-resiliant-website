@@ -2,7 +2,7 @@ import "../style/addnews.scss";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Nav from "../components/Nav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { doc, setDoc } from "firebase/firestore"; 
 import { firestore } from "../firebase"; 
@@ -18,6 +18,13 @@ const AddNews = () => {
     const unique_id = uuidv4();
     const navigate = useNavigate(); 
     useOnliStatus(); 
+
+    useEffect(() => {
+        if(localStorage.getItem("user") === undefined){
+            navigate('/'); 
+        }
+        // eslint-disable-next-line
+    }, [])
 
     const handleAddNews = () => {
 

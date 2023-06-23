@@ -20,10 +20,18 @@ const Home = () => {
     const pagesCount = usedNewsData.length/10; 
     const [currentPage, setCurrentPage] = useState(0); 
     const displayArray = usedNewsData.splice(currentPage*10, 10); 
+    const [loading, setLoading] = useState(false);
 
     
     useEffect(() => {
+        if(localStorage.getItem("user") === undefined){
+            navigate('/'); 
+        }
+
+        setLoading(true); 
+
         if(navigator.onLine){
+            
             const ref = collection(firestore, "news"); 
             getDocs(ref).then((response) => {
                 const tempNewsData:  NewsType[] = []; 
@@ -34,13 +42,17 @@ const Home = () => {
 
                 setNewsData([...tempNewsData]); 
                 localStorage.setItem("news", JSON.stringify(tempNewsData)); 
+                setLoading(false); 
             }).catch(() => {
                 toast("Your internet is poor")
             })
         }else{
             const tempData = JSON.parse(localStorage.getItem("news") || '[]'); 
             setNewsData([...tempData]); 
+            setLoading(false); 
         }
+
+        // eslint-disable-next-line
     }, [])
 
 
@@ -57,7 +69,6 @@ const Home = () => {
         nextSelectedPage: number; event: object; isPrevious: boolean;
          isNext: boolean; isBreak: boolean; isActive: boolean; }) => {
         
-        // alert(value.nextSelectedPage);
         if(value.nextSelectedPage === undefined || value.nextSelectedPage > pagesCount){
             return; 
         }
@@ -85,9 +96,10 @@ const Home = () => {
                 <h1>Loged in as {JSON.parse(localStorage.getItem("user") || '').name}</h1>
 
                 <input type="text" placeholder='Search News Title' value={search} onChange={(e) => handleSearch(e.target.value)}/>
-                {/* <button onClick={handleSearch}>Search</button> */}
 
-                <div className='homeMid'>
+                {
+                    loading ? <h2>Loading....</h2> :
+                    <div className='homeMid'>
                     {
                         displayArray.map((news, index) => (
                             <div className='newsCard' key={news.id} onClick={() => handleCardClick(news.id !== undefined ? news.id : '')}>
@@ -122,9 +134,11 @@ const Home = () => {
                         <p>{currentPage+1} of {Math.ceil(pagesCount)}</p>
                         <p onClick={nextClick}>{'>'}</p>
                     </div>
-                
 
-                </div>
+
+                    </div>
+                }
+                
 
                 <ToastContainer />
             </div>
