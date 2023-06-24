@@ -7,6 +7,7 @@ import { firestore } from "../firebase";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { doc, setDoc, runTransaction, addDoc, collection, query, where, getDocs } from "firebase/firestore"; 
+import useOnliStatus from "../hook/useOnline";
 
 
 
@@ -16,6 +17,8 @@ const News = () => {
 
     const [newsInfo, setNewsInfo] = useState<NewsType>(); 
     const [voted, setVoted] = useState(''); 
+
+    useOnliStatus(); 
 
 
     useEffect(() => {
