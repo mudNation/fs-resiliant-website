@@ -13,7 +13,7 @@ this.addEventListener("install", (event) => {
                 // `${process.env.PUBLIC_URL}/index.html/news`,
 
 
-                `${process.env.PUBLIC_URL}/static/js/bundle.js`,
+                `/static/js/bundle.js`,
             ])
         })
     )
