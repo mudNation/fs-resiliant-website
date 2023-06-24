@@ -1,6 +1,6 @@
 let cacheData='appV1'; 
 
-this.addEventListener("install", (event) => {
+this.addEventListener("load", (event) => {
     event.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
@@ -13,7 +13,7 @@ this.addEventListener("install", (event) => {
                 // `${process.env.PUBLIC_URL}/index.html/news`,
 
 
-                `/static/js/bundle.js`,
+                `https://fs-resiliant-website-pzi8-dtxig48sy-mudnation.vercel.app/static/js/bundle.js`,
             ])
         })
     )
