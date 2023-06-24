@@ -6,7 +6,7 @@ import "../style/news.scss";
 import { firestore } from "../firebase"; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { doc, setDoc, runTransaction, addDoc, collection, query, where, getDocs } from "firebase/firestore"; 
+import { doc, setDoc, runTransaction, addDoc, collection, query, where, getDocs, getDoc } from "firebase/firestore"; 
 import useOnliStatus from "../hook/useOnline";
 
 
@@ -17,6 +17,7 @@ const News = () => {
 
     const [newsInfo, setNewsInfo] = useState<NewsType>(); 
     const [voted, setVoted] = useState(''); 
+    const [loading, setLoading] = useState(false); 
 
     useOnliStatus(); 
 
@@ -26,21 +27,34 @@ const News = () => {
             navigate('/'); 
         }
 
-        const newsData: NewsType[] = JSON.parse(localStorage.getItem('news') || '[]'); 
-        const tempNewsInfo: NewsType | undefined = newsData.find((news) => news.id === id); 
-        setNewsInfo(tempNewsInfo)
+        if(navigator.onLine){
+            downloadUserRating(); 
+        }else{
+            const newsData: NewsType[] = JSON.parse(localStorage.getItem('news') || '[]'); 
+            const tempNewsInfo: NewsType | undefined = newsData.find((news) => news.id === id); 
+            setNewsInfo(tempNewsInfo)
+        }
 
-        downloadUserRating(); 
         // eslint-disable-next-line
     }, [])
 
-    const downloadUserRating = () => {
+    const downloadUserRating = async () => {
+        setLoading(true); 
+
+        const docRef = doc(firestore, "news", id || '');
+        const docSnap = await getDoc(docRef); 
+        setNewsInfo(docSnap.data())
+    
+
         const userDetails = JSON.parse(localStorage.getItem("user") || ""); 
 
         const ref = query(collection(firestore, "votes"), where("userid", "==", userDetails.id), where("newsid", "==", id));
         getDocs(ref).then((response) => {
+            setLoading(false);
             if(response.docs.length > 0){
                 setVoted(response.docs[0].data().vote); 
+
+                setLoading(false); 
             }
         })
     }
@@ -174,26 +188,38 @@ const News = () => {
         <div className="singleNewsContent">
             <Nav/>
 
-            <h1>{newsInfo?.title}</h1>
-            <h2>{newsInfo?.excerpt}</h2>
-            <p className="story_content">
-                {newsInfo?.story_content}
-            </p>
+            {
+                loading ? 
+                <h2>Loading....</h2> : 
+                
+                <>
+                     <h1>{newsInfo?.title}</h1>
+                    <h2>{newsInfo?.excerpt}</h2>
+                    <p className="story_content">
+                        {newsInfo?.story_content}
+                    </p>
 
-            <div className="rating">
-                <div className= {voted==="up" ? "chevRating chevRatingClicked" : "chevRating"} onClick={() => handleVoteClick("up")}>
-                    <p>UP</p>
-                </div>
-                <div><p>{newsInfo?.ratings !== undefined ? newsInfo.ratings.rating : ''}</p></div>
-                <div className={voted==="down" ? "chevRating chevRatingClicked" : "chevRating"} onClick={() => handleVoteClick("down")}>
-                    <p>DOWN</p>
-                </div> 
-            </div>
+                    <div className="rating">
+                        <div className= {voted==="up" ? "chevRating chevRatingClicked" : "chevRating"} onClick={() => handleVoteClick("up")}>
+                            <p> {newsInfo?.ratings !== undefined ? newsInfo.ratings.upvotes : ''} UP</p>
+                        </div>
 
-            <p className="authorDet firstAuthor">Author Name: {newsInfo?.author !== undefined ? newsInfo?.author.name : ''}</p>
-            <p className="authorDet">Author Email: {newsInfo?.author !== undefined ? newsInfo?.author.email : ''}</p>
-            <p className="authorDet">Author Phone: {newsInfo?.author !== undefined ? newsInfo?.author.phone : ''}</p>
-            <p className="authorDet">Date Entered: {newsInfo?.story_date}</p>
+                        <div><p>{newsInfo?.ratings !== undefined ? newsInfo.ratings.rating : ''}</p></div>
+
+                        <div className={voted==="down" ? "chevRating chevRatingClicked" : "chevRating"} onClick={() => handleVoteClick("down")}>
+                            <p> {newsInfo?.ratings !== undefined ? newsInfo.ratings.downvotes : ''} DOWN</p>
+                        </div> 
+                    </div>
+
+                    <p className="authorDet firstAuthor">Author Name: {newsInfo?.author !== undefined ? newsInfo?.author.name : ''}</p>
+                    <p className="authorDet">Author Email: {newsInfo?.author !== undefined ? newsInfo?.author.email : ''}</p>
+                    <p className="authorDet">Author Phone: {newsInfo?.author !== undefined ? newsInfo?.author.phone : ''}</p>
+                    <p className="authorDet">Date Entered: {newsInfo?.story_date}</p>
+                </>
+               
+            }
+
+            
 
             <ToastContainer />
         </div>

@@ -61,6 +61,7 @@ const Login = () => {
         if(localStorage.getItem("user") !== null){
             navigate("/home"); 
         }
+        // eslint-disable-next-line
     }, [])
 
     const openSignUp = () => {

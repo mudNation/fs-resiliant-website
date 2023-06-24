@@ -142,7 +142,6 @@ const useOnliStatus = () => {
             window.removeEventListener('offline', handleStatusChange);
           };
 
-          alert(" in here "); 
           // eslint-disable-next-line
     }, [isOnline])
 
