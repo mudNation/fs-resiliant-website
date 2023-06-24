@@ -4,13 +4,13 @@ this.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
-                'https://fs-resiliant-website.vercel.app/static/js/bundle.js',
-                'https://fs-resiliant-website.vercel.app//index.html',
-                'https://fs-resiliant-website.vercel.app//index.html/',
-                'https://fs-resiliant-website.vercel.app//index.html/home',
-                'https://fs-resiliant-website.vercel.app//index.html/signup',
-                'https://fs-resiliant-website.vercel.app//index.html/add',
-                'https://fs-resiliant-website.vercel.app//index.html/news',
+                `${process.env.PUBLIC_URL}/static/js/bundle.js`,
+                `${process.env.PUBLIC_URL}/index.html`,
+                `${process.env.PUBLIC_URL}/index.html/`,
+                `${process.env.PUBLIC_URL}/index.html/home`,
+                `${process.env.PUBLIC_URL}/index.html/signup`,
+                `${process.env.PUBLIC_URL}/index.html/add`,
+                `${process.env.PUBLIC_URL}/index.html/news`,
             ])
         })
     )
