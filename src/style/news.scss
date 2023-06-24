@@ -31,6 +31,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-right: 20px;
         }
 
         .chevRating{
@@ -48,7 +49,12 @@
             color: white; 
         }
 
-        div:not(:last-child){
+        button{
+            background-color: white;
+            color: black; 
+        }
+
+        button:not(:last-child){
             margin-right: 20px;
         }
 
@@ -94,10 +100,15 @@
                 width: 60px; 
             }
 
-            div:not(:last-child){
+            button:not(:last-child){
+                margin-right: 10px;
+            }
+
+            div{
                 margin-right: 10px;
             }
         }
+        
 
         .authorDet{
             font-size: 12px; 

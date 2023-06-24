@@ -18,6 +18,7 @@ const News = () => {
     const [newsInfo, setNewsInfo] = useState<NewsType>(); 
     const [voted, setVoted] = useState(''); 
     const [loading, setLoading] = useState(false); 
+    const [disable, setDisabled] = useState(false); 
 
     useOnliStatus(); 
 
@@ -63,6 +64,7 @@ const News = () => {
         if(vote === voted){
             return; 
         }
+        setDisabled(true); 
 
         setVoted(vote); 
         const userDetails = JSON.parse(localStorage.getItem("user") || ''); 
@@ -90,6 +92,7 @@ const News = () => {
             }
 
             toast("Changes would be made when you come online");
+            setDisabled(false); 
 
             localStorage.setItem("ratings", JSON.stringify(ratingsArray)); 
         }
@@ -125,13 +128,14 @@ const News = () => {
                         transaction.update(postRef, { ratings: {upvotes: newVote, downvotes: sfDoc.data().ratings.downvotes, rating: newRating } });
     
                         updateNewsInfo({upvotes: newVote, downvotes: sfDoc.data().ratings.downvotes, rating: newRating }); 
-    
+                        setDisabled(false); 
                     }else{
                         const newVote = sfDoc.data().ratings.downvotes + 1;
                         const newRating = (sfDoc.data().ratings.upvotes * 5) / (newVote + sfDoc.data().ratings.upvotes); 
                         transaction.update(postRef, { ratings: {upvotes: sfDoc.data().ratings.upvotes, downvotes: newVote, rating: newRating } });
     
                         updateNewsInfo({upvotes: sfDoc.data().ratings.upvotes, downvotes: newVote, rating: newRating }); 
+                        setDisabled(false); 
                     }
                 }
                 
@@ -168,6 +172,7 @@ const News = () => {
                             
                             transaction.update(postRef, { ratings: {upvotes: upvotes, downvotes: downvotes, rating: newRating } });
                             updateNewsInfo({upvotes: upvotes, downvotes: downvotes, rating: newRating });
+                            setDisabled(false); 
                         }else{
                             const downvotes = sfDoc.data().ratings.downvotes + 1;
                             const upvotes = sfDoc.data().ratings.upvotes - 1;
@@ -175,6 +180,7 @@ const News = () => {
     
                             transaction.update(postRef, { ratings: {upvotes: upvotes, downvotes: downvotes, rating: newRating } });
                             updateNewsInfo({upvotes: upvotes, downvotes: downvotes, rating: newRating });
+                            setDisabled(false); 
                         }
                     }
                     
@@ -200,15 +206,15 @@ const News = () => {
                     </p>
 
                     <div className="rating">
-                        <div className= {voted==="up" ? "chevRating chevRatingClicked" : "chevRating"} onClick={() => handleVoteClick("up")}>
+                        <button className= {voted==="up" ? "chevRating chevRatingClicked" : "chevRating"} onClick={() => handleVoteClick("up")} disabled={disable}>
                             <p> {newsInfo?.ratings !== undefined ? newsInfo.ratings.upvotes : ''} UP</p>
-                        </div>
+                        </button>
 
                         <div><p>{newsInfo?.ratings !== undefined ? newsInfo.ratings.rating : ''}</p></div>
 
-                        <div className={voted==="down" ? "chevRating chevRatingClicked" : "chevRating"} onClick={() => handleVoteClick("down")}>
+                        <button className={voted==="down" ? "chevRating chevRatingClicked" : "chevRating"} onClick={() => handleVoteClick("down")} disabled={disable}>
                             <p> {newsInfo?.ratings !== undefined ? newsInfo.ratings.downvotes : ''} DOWN</p>
-                        </div> 
+                        </button> 
                     </div>
 
                     <p className="authorDet firstAuthor">Author Name: {newsInfo?.author !== undefined ? newsInfo?.author.name : ''}</p>
