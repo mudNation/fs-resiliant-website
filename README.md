@@ -10,7 +10,8 @@ when a user has loged in, they can then access the website even though they are 
 
 The home page shows the news articles, but only ten at a time and is navigated via the pagination at the bottom. 
 
-Users can view each article and can also add their rating by voting up or down for the article. 
+Users can view each article and can also add their rating by voting up or down for the article. When a user rates an article the app remembers this shows them
+which vote they made previously, but only when online. 
 
 An extra feature that was added was allowing the users create articles, this was also made it easier to upload the 100 required articles. 
 
