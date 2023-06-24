@@ -114,7 +114,7 @@ const useOnliStatus = () => {
     }
 
     useEffect(() => {
-        if(count > 1){
+        if(count > 0){
 
             toast(isOnline ? "You are back online" : "You just went offline"); 
 
