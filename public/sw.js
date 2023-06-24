@@ -13,7 +13,7 @@ this.addEventListener("install", (event) => {
                 // `${process.env.PUBLIC_URL}/index.html/news`,
 
 
-                `https://fs-resiliant-website-pzi8-dtxig48sy-mudnation.vercel.app/static/js/bundle.js`,
+                `https://fs-resiliant-website-pzi8-dtxig48sy-mudnation.vercel.app/index.html`,
             ])
         })
     )
