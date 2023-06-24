@@ -4,15 +4,13 @@ this.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
-                // '/static/js/main.chunk.js',
-                // '/static/js/0.chunk.js',
-                '/static/js/bundle.js',
-                '/index.html',
-                '/',
-                '/home',
-                '/signup',
-                '/add',
-                '/news',
+                'https://fs-resiliant-website.vercel.app/static/js/bundle.js',
+                'https://fs-resiliant-website.vercel.app//index.html',
+                'https://fs-resiliant-website.vercel.app//index.html/',
+                'https://fs-resiliant-website.vercel.app//index.html/home',
+                'https://fs-resiliant-website.vercel.app//index.html/signup',
+                'https://fs-resiliant-website.vercel.app//index.html/add',
+                'https://fs-resiliant-website.vercel.app//index.html/news',
             ])
         })
     )
